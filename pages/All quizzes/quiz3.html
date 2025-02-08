@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <div class="container">
+        <h2>System Design Quiz</h2>
+        <div id="quiz-container">
+            <div id="question-container" class="question-container"></div>
+            <div id="options-container" class="options"></div>
+            <button id="next-btn">Next</button>
+            <button id="exit-btn" class="exit">Exit</button>
+        </div>
+
+        <div id="result-container" class="hidden">
+            <h3>Your Score: <span id="score"></span>/10</h3>
+            <h4>Answers:</h4>
+            <ul id="answers-list"></ul>
+            <button onclick="restartQuiz()" class="btn">Restart</button>
+            <button onclick="exitQuiz()" class="btn">Exit</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is the primary goal of system design?", options: ["To improve database queries", "To ensure scalability and reliability", "To write efficient code", "To design UI components"], answer: "To ensure scalability and reliability" },
+            { question: "Which of the following is a key component of a scalable system?", options: ["Load Balancer", "CSS Framework", "REST API", "Local Storage"], answer: "Load Balancer" },
+            { question: "What is sharding in database design?", options: ["Breaking a database into smaller tables", "Distributing data across multiple databases", "Compressing data to save space", "Creating indexes for faster queries"], answer: "Distributing data across multiple databases" },
+            { question: "Which caching strategy ensures the most frequently accessed data remains in the cache?", options: ["Write-through", "Least Recently Used (LRU)", "Write-back", "Round-robin"], answer: "Least Recently Used (LRU)" },
+            { question: "What is the CAP theorem in system design?", options: ["A principle that states a distributed system can only achieve two out of three: Consistency, Availability, and Partition Tolerance", "A method to compress data", "A guideline for designing microservices", "A strategy for scaling frontend applications"], answer: "A principle that states a distributed system can only achieve two out of three: Consistency, Availability, and Partition Tolerance" },
+            { question: "Which of the following databases is best suited for handling large-scale, high-velocity data?", options: ["MySQL", "PostgreSQL", "MongoDB", "SQLite"], answer: "MongoDB" },
+            { question: "What is a key advantage of microservices architecture?", options: ["Easier debugging", "Better modularity and scalability", "Reduced network latency", "Faster database queries"], answer: "Better modularity and scalability" },
+            { question: "What is the main role of a load balancer in a distributed system?", options: ["To store static assets", "To distribute network traffic across multiple servers", "To manage API requests", "To optimize database queries"], answer: "To distribute network traffic across multiple servers" },
+            { question: "Which protocol is commonly used for real-time communication in system design?", options: ["HTTP", "FTP", "WebSockets", "SMTP"], answer: "WebSockets" },
+            { question: "What is the primary benefit of using a message queue in a system?", options: ["To store logs", "To enable asynchronous communication between services", "To encrypt data", "To improve UI performance"], answer: "To enable asynchronous communication between services" }
+        ];
+
+
+
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+        let selectedAnswer = null;
+        let timer;
+        let timeLeft = 15;
+
+        function loadQuestion() {
+            clearTimeout(timer); // Clear previous timer
+            timeLeft = 15; // Reset time for new question
+
+            const questionContainer = document.getElementById("question-container");
+            const optionsContainer = document.getElementById("options-container");
+            document.getElementById("next-btn").disabled = false;
+
+            // Add question & timer
+            questionContainer.innerHTML = `<h3>${quizData[currentQuestion].question}</h3>
+                                        <p class="timer" id="timer">Time Left: ${timeLeft}s</p>`;
+
+            updateTimerDisplay(); // Now the #timer element exists, so this will work.
+
+            optionsContainer.innerHTML = ""; // Clear previous options
+            selectedAnswer = null;
+
+            quizData[currentQuestion].options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.classList.add("option-btn");
+                button.onclick = () => selectAnswer(button, option);
+                optionsContainer.appendChild(button);
+            });
+
+            startTimer();
+        }
+
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+
+                if (timeLeft === 0) {
+                    clearInterval(timer);
+                    userAnswers.push({ question: quizData[currentQuestion].question, selected: "No Answer", correct: quizData[currentQuestion].answer });
+                    moveToNextQuestion();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById("timer").textContent = `Time Left: ${timeLeft}s`;
+        }
+
+        function selectAnswer(button, answer) {
+            document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            selectedAnswer = answer;
+        }
+
+        document.getElementById("next-btn").addEventListener("click", () => {
+            if (!selectedAnswer) {
+                alert("Please select an answer before proceeding.");
+                return;
+            }
+
+            clearInterval(timer);
+            userAnswers.push({ question: quizData[currentQuestion].question, selected: selectedAnswer, correct: quizData[currentQuestion].answer });
+
+            if (selectedAnswer === quizData[currentQuestion].answer) {
+                score++;
+            }
+
+            moveToNextQuestion();
+        });
+
+        function moveToNextQuestion() {
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quiz-container").classList.add("hidden");
+            document.getElementById("result-container").classList.remove("hidden");
+
+            document.getElementById("score").textContent = score;
+            const answersList = document.getElementById("answers-list");
+            answersList.innerHTML = "";
+
+            userAnswers.forEach(ans => {
+                const li = document.createElement("li");
+                li.innerHTML = `${ans.question} <br> <b>Your Answer:</b> ${ans.selected} <br> <b>Correct Answer:</b> ${ans.correct}`;
+                
+                // Add class based on correctness
+                if (ans.selected === ans.correct) {
+                    li.classList.add("correct");
+                } else {
+                    li.classList.add("incorrect");
+                }
+
+                answersList.appendChild(li);
+            });
+        }
+
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            document.getElementById("quiz-container").classList.remove("hidden");
+            document.getElementById("result-container").classList.add("hidden");
+            loadQuestion();
+        }
+
+        function exitQuiz() {
+            const confirmExit = confirm("Are you sure you want to exit the quiz?");
+            if (confirmExit) {
+                window.location.href = "../quizzes.html";
+            }
+        }
+
+        document.getElementById("exit-btn").addEventListener("click", exitQuiz);
+
+        // Load first question
+        loadQuestion();
+
+        window.addEventListener("beforeunload", (event) => {
+            event.preventDefault();
+            event.returnValue = "Are you sure you want to reload? Your progress will be lost.";
+        });
+    </script>
+</body>
+</html>

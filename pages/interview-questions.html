@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interview Questions</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="interview-questions.css">
+    <link rel="stylesheet" href="interview-questions.css">
+</head>
+<body>
+    <!-- Navbar Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../index.html"><span>&lt</span>TechPrep <span>/&gt</span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropbtn" onmouseover="changeArrow(true)" onmouseout="changeArrow(false)">Resources <span id="arrow">&#x2193;</span></a>
+                    <div class="dropdown-content">
+                        <a href="interview-questions.html">Interview Questions</a>
+                        <a href="practice-coding.html">Practice Coding</a>
+                        <a href="quizzes.html">Quizzes</a>
+                        <a href="resources.html">Other Resources</a>
+                    </div>
+                </li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="questions-section">
+            <h2>Technical Interview Questions</h2>
+            
+            <div class="categories-container">
+                <button class="category-btn" onclick="toggleQuestions('data-structures')">Data Structures</button>
+                <ul class="questions-list" id="data-structures">
+                    <li><strong>Q1:</strong> What is an Array? <br><strong>A:</strong> A collection of elements stored at contiguous memory locations.</li>
+                    <li><strong>Q2:</strong> Explain Linked List. <br><strong>A:</strong> A linear data structure where elements are linked using pointers.</li>
+                    <li><strong>Q3:</strong> What is a Stack? <br><strong>A:</strong> A Last In, First Out (LIFO) data structure.</li>
+                    <li><strong>Q4:</strong> What is a Queue? <br><strong>A:</strong> A First In, First Out (FIFO) data structure.</li>
+                    <li><strong>Q5:</strong> Difference between Stack and Queue? <br><strong>A:</strong> Stack follows LIFO, while Queue follows FIFO.</li>
+                </ul>
+                
+                <button class="category-btn" onclick="toggleQuestions('algorithms')">Algorithms</button>
+                <ul class="questions-list" id="algorithms">
+                    <li><strong>Q1:</strong> What is the time complexity of QuickSort? <br><strong>A:</strong> Best & Average: O(n log n), Worst: O(n²).</li>
+                    <li><strong>Q2:</strong> Explain Merge Sort. <br><strong>A:</strong> A divide-and-conquer sorting algorithm with O(n log n) complexity.</li>
+                </ul>
+                
+                <button class="category-btn" onclick="toggleQuestions('system-design')">System Design</button>
+                <ul class="questions-list" id="system-design">
+                    <li><strong>Q1:</strong> How do you design a URL shortener? <br><strong>A:</strong> Use hashing, a database, and a distributed system for scalability.</li>
+                </ul>
+
+                <button class="category-btn" onclick="toggleQuestions('oops')">Object-Oriented Programming</button>
+                <ul class="questions-list" id="oops">
+                    <li><strong>Q1:</strong> What are the four pillars of OOP? <br><strong>A:</strong> Encapsulation, Abstraction, Inheritance, and Polymorphism.</li>
+                </ul>
+                
+                <button class="category-btn" onclick="toggleQuestions('os')">Operating System</button>
+                <ul class="questions-list" id="os">
+                    <li><strong>Q1:</strong> What is a process? <br><strong>A:</strong> An instance of a running program.</li>
+                </ul>
+                
+                <button class="category-btn" onclick="toggleQuestions('networks')">Computer Networks</button>
+                <ul class="questions-list" id="networks">
+                    <li><strong>Q1:</strong> What is TCP/IP? <br><strong>A:</strong> A communication protocol for interconnecting network devices.</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 TechPrep. All Rights Reserved.</p>
+            
+            <!-- Footer Links -->
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="../index.html#about">About Us</a></li>
+                <li><a href="../index.html#contact">Contact Us</a></li>
+            </ul>
+
+            <!-- Resources Links -->
+            <ul class="resources-links">
+                <li><a href="interview-questions.html">Interview Questions</a></li>
+                <li><a href="practice-coding.html">Practise Coding</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="resources.html">Other Resources</a></li>
+            </ul>
+
+            <!-- Social Media Links -->
+            <div class="social-links">
+                <a href="#" class="social-icon" aria-label="Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleQuestions(id) {
+            let list = document.getElementById(id);
+            list.style.display = list.style.display === "block" ? "none" : "block";
+        }
+
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        function changeArrow(isHovered) {
+            document.getElementById("arrow").style.transform = isHovered ? "rotate(180deg)" : "rotate(0deg)";
+        }
+
+        window.addEventListener('click', (event) => {
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

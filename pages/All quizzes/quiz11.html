@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Machine Learning Quiz</h2>
+        <div id="quiz-container">
+            <div id="question-container" class="question-container"></div>
+            <div id="options-container" class="options"></div>
+            <button id="next-btn">Next</button>
+            <button id="exit-btn" class="exit">Exit</button>
+        </div>
+
+        <div id="result-container" class="hidden">
+            <h3>Your Score: <span id="score"></span>/10</h3>
+            <h4>Answers:</h4>
+            <ul id="answers-list"></ul>
+            <button onclick="restartQuiz()" class="btn">Restart</button>
+            <button onclick="exitQuiz()" class="btn">Exit</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is Machine Learning?", options: ["A type of programming language", "A method to make predictions based on data", "A way to design websites", "A protocol for network communication"], answer: "A method to make predictions based on data" },
+            { question: "Which of the following is a supervised learning algorithm?", options: ["K-Means", "Decision Tree", "Apriori", "DBSCAN"], answer: "Decision Tree" },
+            { question: "What is overfitting in Machine Learning?", options: ["When the model performs well on training data but poorly on new data", "When the model does not train at all", "When the model takes too long to train", "When the model uses excessive memory"], answer: "When the model performs well on training data but poorly on new data" },
+            { question: "Which algorithm is primarily used for classification problems?", options: ["Linear Regression", "K-Nearest Neighbors (KNN)", "K-Means", "Apriori"], answer: "K-Nearest Neighbors (KNN)" },
+            { question: "What is a neural network inspired by?", options: ["Internet Protocols", "Human Brain", "Quantum Mechanics", "Solar System"], answer: "Human Brain" },
+            { question: "Which evaluation metric is commonly used for regression problems?", options: ["Accuracy", "Precision", "Mean Squared Error (MSE)", "F1-Score"], answer: "Mean Squared Error (MSE)" },
+            { question: "Which of the following is a technique to reduce overfitting?", options: ["Normalization", "Data Augmentation", "Batch Processing", "Feature Scaling"], answer: "Data Augmentation" },
+            { question: "What is the purpose of a confusion matrix?", options: ["To visualize feature importance", "To evaluate classification performance", "To optimize learning rate", "To reduce data dimensionality"], answer: "To evaluate classification performance" },
+            { question: "Which Machine Learning library is developed by Google?", options: ["Scikit-Learn", "TensorFlow", "PyTorch", "Keras"], answer: "TensorFlow" },
+            { question: "What is unsupervised learning used for?", options: ["Predicting continuous values", "Labeling data manually", "Finding hidden patterns in data", "Performing hypothesis testing"], answer: "Finding hidden patterns in data" }
+        ];
+
+
+
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+        let selectedAnswer = null;
+        let timer;
+        let timeLeft = 15;
+
+        function loadQuestion() {
+            clearTimeout(timer); // Clear previous timer
+            timeLeft = 15; // Reset time for new question
+
+            const questionContainer = document.getElementById("question-container");
+            const optionsContainer = document.getElementById("options-container");
+            document.getElementById("next-btn").disabled = false;
+
+            // Add question & timer
+            questionContainer.innerHTML = `<h3>${quizData[currentQuestion].question}</h3>
+                                        <p class="timer" id="timer">Time Left: ${timeLeft}s</p>`;
+
+            updateTimerDisplay(); // Now the #timer element exists, so this will work.
+
+            optionsContainer.innerHTML = ""; // Clear previous options
+            selectedAnswer = null;
+
+            quizData[currentQuestion].options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.classList.add("option-btn");
+                button.onclick = () => selectAnswer(button, option);
+                optionsContainer.appendChild(button);
+            });
+
+            startTimer();
+        }
+
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+
+                if (timeLeft === 0) {
+                    clearInterval(timer);
+                    userAnswers.push({ question: quizData[currentQuestion].question, selected: "No Answer", correct: quizData[currentQuestion].answer });
+                    moveToNextQuestion();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById("timer").textContent = `Time Left: ${timeLeft}s`;
+        }
+
+        function selectAnswer(button, answer) {
+            document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            selectedAnswer = answer;
+        }
+
+        document.getElementById("next-btn").addEventListener("click", () => {
+            if (!selectedAnswer) {
+                alert("Please select an answer before proceeding.");
+                return;
+            }
+
+            clearInterval(timer);
+            userAnswers.push({ question: quizData[currentQuestion].question, selected: selectedAnswer, correct: quizData[currentQuestion].answer });
+
+            if (selectedAnswer === quizData[currentQuestion].answer) {
+                score++;
+            }
+
+            moveToNextQuestion();
+        });
+
+        function moveToNextQuestion() {
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quiz-container").classList.add("hidden");
+            document.getElementById("result-container").classList.remove("hidden");
+
+            document.getElementById("score").textContent = score;
+            const answersList = document.getElementById("answers-list");
+            answersList.innerHTML = "";
+
+            userAnswers.forEach(ans => {
+                const li = document.createElement("li");
+                li.innerHTML = `${ans.question} <br> <b>Your Answer:</b> ${ans.selected} <br> <b>Correct Answer:</b> ${ans.correct}`;
+                
+                // Add class based on correctness
+                if (ans.selected === ans.correct) {
+                    li.classList.add("correct");
+                } else {
+                    li.classList.add("incorrect");
+                }
+
+                answersList.appendChild(li);
+            });
+        }
+
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            document.getElementById("quiz-container").classList.remove("hidden");
+            document.getElementById("result-container").classList.add("hidden");
+            loadQuestion();
+        }
+
+        function exitQuiz() {
+            const confirmExit = confirm("Are you sure you want to exit the quiz?");
+            if (confirmExit) {
+                window.location.href = "../quizzes.html";
+            }
+        }
+
+        document.getElementById("exit-btn").addEventListener("click", exitQuiz);
+
+        // Load first question
+        loadQuestion();
+
+        window.addEventListener("beforeunload", (event) => {
+            event.preventDefault();
+            event.returnValue = "Are you sure you want to reload? Your progress will be lost.";
+        });
+    </script>
+</body>
+</html>

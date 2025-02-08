@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechPrep</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navbar Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="#hero"><span>&lt</span>TechPrep <span>/&gt</span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropbtn" onmouseover="changeArrow(true)" onmouseout="changeArrow(false)">Resources <span id="arrow">&#x2193;</span></a>
+                    <div class="dropdown-content">
+                        <a href="pages/interview-questions.html">Interview Questions</a>
+                        <a href="pages/practice-coding.html">Practise Coding</a>
+                        <a href="pages/quizzes.html">Quizzes</a>
+                        <a href="pages/resources.html">Other Resources</a>
+                    </div>
+                </li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Master Your Tech Interviews with Confidence</h1>
+        <p>Get access to expert-curated interview questions, real-world coding challenges, mock interviews, and essential study resources to boost your chances of success.</p>
+        <div class="hero-buttons">
+            <a href="#resources" class="cta-btn">Start Learning</a>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Resources Section -->
+    <section id="resources" class="resources">
+        <h2>Explore Resources</h2>
+        <div class="resource-cards">
+            <div class="card">
+                <h3>Interview Questions</h3>
+                <p>Prepare with commonly asked interview questions in various technical fields.</p>
+                <a href="pages/interview-questions.html">Learn More</a>
+            </div>
+            <div class="card">
+                <h3>Practice Coding</h3>
+                <p>Improve your coding skills with hands-on coding problems.</p>
+                <a href="pages/practice-coding.html">Start Coding</a>
+            </div>
+            <div class="card">
+                <h3>Quizzes</h3>
+                <p>Test your knowledge with quizzes designed for tech interviews.</p>
+                <a href="pages/quizzes.html">Take Quiz</a>
+            </div>
+            <div class="card">
+                <h3>Other Resources</h3>
+                <p>Explore additional resources to prepare for interviews.</p>
+                <a href="pages/resources.html">View Resources</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <section id="about" class="about">
+        <h2>About Us</h2>
+        <p>TechPrep is a platform designed to help individuals prepare for technical interviews. Our resources range from interview questions to coding practice, quizzes, and more. Our mission is to provide everything you need to succeed in your tech career.</p>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+        <form id="contactForm" action="javascript:void(0);" onsubmit="showPopup()">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+
+            <button type="submit" class="cta-btn">Send Message</button>
+        </form>
+    </section>
+
+    <!-- Popup Message -->
+    <div id="popup" class="popup">
+        <div class="popup-content">
+            <p>Thank you for contacting us! We'll get back to you shortly.</p>
+            <button onclick="closePopup()" class="close-btn">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 TechPrep. All Rights Reserved.</p>
+            
+            <!-- Footer Links -->
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+
+            <!-- Resources Links -->
+            <ul class="resources-links">
+                <li><a href="pages/interview-questions.html">Interview Questions</a></li>
+                <li><a href="pages/practice-coding.html">Practise Coding</a></li>
+                <li><a href="pages/quizzes.html">Quizzes</a></li>
+                <li><a href="pages/resources.html">Other Resources</a></li>
+            </ul>
+
+            <!-- Social Media Links -->
+            <div class="social-links">
+                <a href="#" class="social-icon" aria-label="Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+
+
+    <script>
+        function changeArrow(isHovering) {
+            var arrow = document.getElementById('arrow');
+            arrow.innerHTML = isHovering ? '&#x2191;' : '&#x2193;';
+        }
+
+        function showPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
+
+        // JavaScript for toggling the menu visibility
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        // Toggle the nav-links visibility when the hamburger menu is clicked
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close the menu if the user clicks outside of it
+        window.addEventListener('click', (event) => {
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            const targetElement = document.getElementById(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 80, // Adjust for navbar height
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+
+
+    </script>
+</body>
+</html>

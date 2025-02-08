@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <div class="container">
+        <h2>DevOps Quiz</h2>
+        <div id="quiz-container">
+            <div id="question-container" class="question-container"></div>
+            <div id="options-container" class="options"></div>
+            <button id="next-btn">Next</button>
+            <button id="exit-btn" class="exit">Exit</button>
+        </div>
+
+        <div id="result-container" class="hidden">
+            <h3>Your Score: <span id="score"></span>/10</h3>
+            <h4>Answers:</h4>
+            <ul id="answers-list"></ul>
+            <button onclick="restartQuiz()" class="btn">Restart</button>
+            <button onclick="exitQuiz()" class="btn">Exit</button>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { question: "What is the primary goal of DevOps?", options: ["To separate development and operations", "To automate and integrate development and operations", "To eliminate the need for software testing", "To replace Agile methodology"], answer: "To automate and integrate development and operations" },
+            { question: "Which tool is commonly used for continuous integration (CI)?", options: ["Docker", "Jenkins", "Kubernetes", "Ansible"], answer: "Jenkins" },
+            { question: "What does 'Infrastructure as Code' (IaC) mean?", options: ["Writing code to develop applications", "Managing infrastructure through configuration files", "Using AI to manage servers", "Deploying applications without servers"], answer: "Managing infrastructure through configuration files" },
+            { question: "Which tool is used for container orchestration?", options: ["Git", "Jenkins", "Kubernetes", "Maven"], answer: "Kubernetes" },
+            { question: "Which version control system is most commonly used in DevOps?", options: ["Git", "SVN", "Mercurial", "Bitbucket"], answer: "Git" },
+            { question: "What is the purpose of continuous deployment in DevOps?", options: ["To manually release software updates", "To automate testing only", "To automatically deploy every change that passes testing", "To eliminate the need for monitoring"], answer: "To automatically deploy every change that passes testing" },
+            { question: "Which DevOps practice focuses on automating software testing?", options: ["Continuous Integration", "Continuous Testing", "Infrastructure as Code", "Monitoring and Logging"], answer: "Continuous Testing" },
+            { question: "What is the primary function of Docker?", options: ["To manage source code", "To automate testing", "To create and manage containers", "To monitor server logs"], answer: "To create and manage containers" },
+            { question: "Which tool is used for configuration management in DevOps?", options: ["Terraform", "Ansible", "Docker", "Kubernetes"], answer: "Ansible" },
+            { question: "What is the benefit of using DevOps?", options: ["Slower release cycles", "Reduced automation", "Faster software delivery", "Increased manual processes"], answer: "Faster software delivery" }
+        ];
+
+
+
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = [];
+        let selectedAnswer = null;
+        let timer;
+        let timeLeft = 15;
+
+        function loadQuestion() {
+            clearTimeout(timer); // Clear previous timer
+            timeLeft = 15; // Reset time for new question
+
+            const questionContainer = document.getElementById("question-container");
+            const optionsContainer = document.getElementById("options-container");
+            document.getElementById("next-btn").disabled = false;
+
+            // Add question & timer
+            questionContainer.innerHTML = `<h3>${quizData[currentQuestion].question}</h3>
+                                        <p class="timer" id="timer">Time Left: ${timeLeft}s</p>`;
+
+            updateTimerDisplay(); // Now the #timer element exists, so this will work.
+
+            optionsContainer.innerHTML = ""; // Clear previous options
+            selectedAnswer = null;
+
+            quizData[currentQuestion].options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.classList.add("option-btn");
+                button.onclick = () => selectAnswer(button, option);
+                optionsContainer.appendChild(button);
+            });
+
+            startTimer();
+        }
+
+
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+
+                if (timeLeft === 0) {
+                    clearInterval(timer);
+                    userAnswers.push({ question: quizData[currentQuestion].question, selected: "No Answer", correct: quizData[currentQuestion].answer });
+                    moveToNextQuestion();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById("timer").textContent = `Time Left: ${timeLeft}s`;
+        }
+
+        function selectAnswer(button, answer) {
+            document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+            selectedAnswer = answer;
+        }
+
+        document.getElementById("next-btn").addEventListener("click", () => {
+            if (!selectedAnswer) {
+                alert("Please select an answer before proceeding.");
+                return;
+            }
+
+            clearInterval(timer);
+            userAnswers.push({ question: quizData[currentQuestion].question, selected: selectedAnswer, correct: quizData[currentQuestion].answer });
+
+            if (selectedAnswer === quizData[currentQuestion].answer) {
+                score++;
+            }
+
+            moveToNextQuestion();
+        });
+
+        function moveToNextQuestion() {
+            currentQuestion++;
+
+            if (currentQuestion < quizData.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            document.getElementById("quiz-container").classList.add("hidden");
+            document.getElementById("result-container").classList.remove("hidden");
+
+            document.getElementById("score").textContent = score;
+            const answersList = document.getElementById("answers-list");
+            answersList.innerHTML = "";
+
+            userAnswers.forEach(ans => {
+                const li = document.createElement("li");
+                li.innerHTML = `${ans.question} <br> <b>Your Answer:</b> ${ans.selected} <br> <b>Correct Answer:</b> ${ans.correct}`;
+                
+                // Add class based on correctness
+                if (ans.selected === ans.correct) {
+                    li.classList.add("correct");
+                } else {
+                    li.classList.add("incorrect");
+                }
+
+                answersList.appendChild(li);
+            });
+        }
+
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            userAnswers = [];
+            document.getElementById("quiz-container").classList.remove("hidden");
+            document.getElementById("result-container").classList.add("hidden");
+            loadQuestion();
+        }
+
+        function exitQuiz() {
+            const confirmExit = confirm("Are you sure you want to exit the quiz?");
+            if (confirmExit) {
+                window.location.href = "../quizzes.html";
+            }
+        }
+
+        document.getElementById("exit-btn").addEventListener("click", exitQuiz);
+
+        // Load first question
+        loadQuestion();
+
+        window.addEventListener("beforeunload", (event) => {
+            event.preventDefault();
+            event.returnValue = "Are you sure you want to reload? Your progress will be lost.";
+        });
+    </script>
+</body>
+</html>

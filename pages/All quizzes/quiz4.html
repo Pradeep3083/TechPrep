@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <link rel="stylesheet" href="quiz.css">
+</head>
+<body>
+    <div class="container">
+        <h2>Object-Oriented Programming (OOP) Quiz</h2>
+        <div id="quiz-container">
+            <div id="question-container" class="question-container"></div>
+            <div id="options-container" class="options"></div>
+            <button id="next-btn">Next</button>
+            <button id="exit-btn" class="exit">Exit</button>
+        </div>
+
+        <div id="result-container" class="hidden">
+            <h3>Your Score: <span id="score"></span>/10</h3>
+            <h4>Answers:</h4>
+            <ul id="answers-list"></ul>
+            <button onclick="restartQuiz()" class="btn">Restart</button>
+            <button onclick="exitQuiz()" class="btn">Exit</button>
+        </div>
+    </div>
+
+    <script>
+    const quizData = [
+        { question: "What is the main principle of Object-Oriented Programming?", options: ["Encapsulation", "Recursion", "Iteration", "Compilation"], answer: "Encapsulation" },
+        { question: "Which OOP principle promotes code reuse?", options: ["Encapsulation", "Polymorphism", "Inheritance", "Abstraction"], answer: "Inheritance" },
+        { question: "What is the purpose of a constructor in a class?", options: ["To allocate memory", "To initialize objects", "To create an array", "To delete an object"], answer: "To initialize objects" },
+        { question: "Which of the following is an example of polymorphism?", options: ["A class inheriting from another class", "A method that has multiple implementations", "A function with no return value", "A private variable"], answer: "A method that has multiple implementations" },
+        { question: "What does encapsulation help achieve?", options: ["Hiding data implementation", "Increasing code redundancy", "Slowing down execution", "Making functions global"], answer: "Hiding data implementation" },
+        { question: "Which keyword is used to achieve abstraction in Java?", options: ["private", "abstract", "static", "final"], answer: "abstract" },
+        { question: "Which of the following statements about interfaces is true?", options: ["An interface can have method implementations", "A class can implement multiple interfaces", "Interfaces cannot have variables", "A class can inherit from multiple classes and interfaces"], answer: "A class can implement multiple interfaces" },
+        { question: "Which OOP concept allows multiple methods with the same name but different parameters?", options: ["Encapsulation", "Method Overloading", "Method Overriding", "Abstraction"], answer: "Method Overloading" },
+        { question: "Which access modifier makes a variable accessible within the same package?", options: ["public", "private", "protected", "default"], answer: "default" },
+        { question: "What happens when a subclass has a method with the same signature as its superclass?", options: ["It creates a new method", "It overrides the superclass method", "It throws an error", "It prevents inheritance"], answer: "It overrides the superclass method" }
+    ];
+
+
+
+    let currentQuestion = 0;
+    let score = 0;
+    let userAnswers = [];
+    let selectedAnswer = null;
+    let timer;
+    let timeLeft = 15;
+
+    function loadQuestion() {
+        clearTimeout(timer); // Clear previous timer
+        timeLeft = 15; // Reset time for new question
+
+        const questionContainer = document.getElementById("question-container");
+        const optionsContainer = document.getElementById("options-container");
+        document.getElementById("next-btn").disabled = false;
+
+        // Add question & timer
+        questionContainer.innerHTML = `<h3>${quizData[currentQuestion].question}</h3>
+                                    <p class="timer" id="timer">Time Left: ${timeLeft}s</p>`;
+
+        updateTimerDisplay(); // Now the #timer element exists, so this will work.
+
+        optionsContainer.innerHTML = ""; // Clear previous options
+        selectedAnswer = null;
+
+        quizData[currentQuestion].options.forEach(option => {
+            const button = document.createElement("button");
+            button.textContent = option;
+            button.classList.add("option-btn");
+            button.onclick = () => selectAnswer(button, option);
+            optionsContainer.appendChild(button);
+        });
+
+        startTimer();
+    }
+
+
+    function startTimer() {
+        timer = setInterval(() => {
+            timeLeft--;
+            updateTimerDisplay();
+
+            if (timeLeft === 0) {
+                clearInterval(timer);
+                userAnswers.push({ question: quizData[currentQuestion].question, selected: "No Answer", correct: quizData[currentQuestion].answer });
+                moveToNextQuestion();
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+        document.getElementById("timer").textContent = `Time Left: ${timeLeft}s`;
+    }
+
+    function selectAnswer(button, answer) {
+        document.querySelectorAll(".option-btn").forEach(btn => btn.classList.remove("selected"));
+        button.classList.add("selected");
+        selectedAnswer = answer;
+    }
+
+    document.getElementById("next-btn").addEventListener("click", () => {
+        if (!selectedAnswer) {
+            alert("Please select an answer before proceeding.");
+            return;
+        }
+
+        clearInterval(timer);
+        userAnswers.push({ question: quizData[currentQuestion].question, selected: selectedAnswer, correct: quizData[currentQuestion].answer });
+
+        if (selectedAnswer === quizData[currentQuestion].answer) {
+            score++;
+        }
+
+        moveToNextQuestion();
+    });
+
+    function moveToNextQuestion() {
+        currentQuestion++;
+
+        if (currentQuestion < quizData.length) {
+            loadQuestion();
+        } else {
+            showResult();
+        }
+    }
+
+    function showResult() {
+        document.getElementById("quiz-container").classList.add("hidden");
+        document.getElementById("result-container").classList.remove("hidden");
+
+        document.getElementById("score").textContent = score;
+        const answersList = document.getElementById("answers-list");
+        answersList.innerHTML = "";
+
+        userAnswers.forEach(ans => {
+            const li = document.createElement("li");
+            li.innerHTML = `${ans.question} <br> <b>Your Answer:</b> ${ans.selected} <br> <b>Correct Answer:</b> ${ans.correct}`;
+            
+            // Add class based on correctness
+            if (ans.selected === ans.correct) {
+                li.classList.add("correct");
+            } else {
+                li.classList.add("incorrect");
+            }
+
+            answersList.appendChild(li);
+        });
+    }
+
+
+    function restartQuiz() {
+        currentQuestion = 0;
+        score = 0;
+        userAnswers = [];
+        document.getElementById("quiz-container").classList.remove("hidden");
+        document.getElementById("result-container").classList.add("hidden");
+        loadQuestion();
+    }
+
+    function exitQuiz() {
+        const confirmExit = confirm("Are you sure you want to exit the quiz?");
+        if (confirmExit) {
+            window.location.href = "../quizzes.html";
+        }
+    }
+
+    document.getElementById("exit-btn").addEventListener("click", exitQuiz);
+
+    // Load first question
+    loadQuestion();
+
+    window.addEventListener("beforeunload", (event) => {
+        event.preventDefault();
+        event.returnValue = "Are you sure you want to reload? Your progress will be lost.";
+    });
+
+
+
+    </script>
+</body>
+</html>

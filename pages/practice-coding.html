@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Coding</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="practice-coding.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../index.html"><span>&lt</span>TechPrep <span>/&gt</span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropbtn" onmouseover="changeArrow(true)" onmouseout="changeArrow(false)">Resources <span id="arrow">&#x2193;</span></a>
+                    <div class="dropdown-content">
+                        <a href="interview-questions.html">Interview Questions</a>
+                        <a href="practice-coding.html">Practise Coding</a>
+                        <a href="quizzes.html">Quizzes</a>
+                        <a href="resources.html">Other Resources</a>
+                    </div>
+                </li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="coding-section">
+            <h2>Practice Coding Problems</h2>
+    
+            <!-- Category Filters -->
+            <div class="category-filters">
+                <button class="filter-btn active" onclick="filterProblems('all')">All</button>
+                <button class="filter-btn" onclick="filterProblems('arrays')">Arrays</button>
+                <button class="filter-btn" onclick="filterProblems('strings')">Strings</button>
+                <button class="filter-btn" onclick="filterProblems('numbers')">Numbers</button>
+                <button class="filter-btn" onclick="filterProblems('recursion')">Recursion</button>
+            </div>
+    
+            <!-- Problems Table -->
+            <table id="problemsTable">
+                <thead>
+                    <tr>
+                        <th>Problem Name</th>
+                        <th>Category</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Arrays -->
+                    <tr class="problem-row" data-category="arrays">
+                        <td>Reverse an Array</td>
+                        <td>Arrays</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/reverse-an-array/0" target="_blank">Start Coding</a></td>
+                    </tr>
+                    <tr class="problem-row" data-category="arrays">
+                        <td>Find Second Largest Element</td>
+                        <td>Arrays</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/second-largest3735/1" target="_blank">Start Coding</a></td>
+                    </tr>
+                    <tr class="problem-row" data-category="arrays">
+                        <td>Move Zeros to End</td>
+                        <td>Arrays</td>
+                        <td><a href="https://leetcode.com/problems/move-zeroes/description/" target="_blank">Start Coding</a></td>
+                    </tr>
+    
+                    <!-- Strings -->
+                    <tr class="problem-row" data-category="strings">
+                        <td>Palindrome Check</td>
+                        <td>Strings</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/palindrome-string0817/1" target="_blank">Start Coding</a></td>
+                    </tr>
+                    <tr class="problem-row" data-category="strings">
+                        <td>Count Vowels in a String</td>
+                        <td>Strings</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/consonants-and-vowels-check/1" target="_blank">Start Coding</a></td>
+                    </tr>
+                    <tr class="problem-row" data-category="strings">
+                        <td>Reverse Words in a Sentence</td>
+                        <td>Strings</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/reverse-words-in-a-given-string5459/1" target="_blank">Start Coding</a></td>
+                    </tr>
+    
+                    <!-- Numbers -->
+                    <tr class="problem-row" data-category="numbers">
+                        <td>Fibonacci Series</td>
+                        <td>Numbers</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/nth-fibonacci-number1335/1" target="_blank">Start Coding</a></td>
+                    </tr>
+                    <tr class="problem-row" data-category="numbers">
+                        <td>Check Prime Number</td>
+                        <td>Numbers</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/prime-number2314/1" target="_blank">Start Coding</a></td>
+                    </tr>
+                    <tr class="problem-row" data-category="numbers">
+                        <td>Find Factorial</td>
+                        <td>Numbers</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/factorial5739/1" target="_blank">Start Coding</a></td>
+                    </tr>
+    
+                    <!-- Recursion -->
+                    <tr class="problem-row" data-category="recursion">
+                        <td>Greatest Common Divisor</td>
+                        <td>Recursion</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/gcd-of-two-numbers3459/1" target="_blank">Start Coding</a></td>
+                    </tr>
+                    <tr class="problem-row" data-category="recursion">
+                        <td>Sum of Digits (Recursive)</td>
+                        <td>Recursion</td>
+                        <td><a href="https://www.geeksforgeeks.org/problems/sum-of-digits1742/1" target="_blank">Start Coding</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
+    
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 TechPrep. All Rights Reserved.</p>
+            
+            <!-- Footer Links -->
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="../index.html#about">About Us</a></li>
+                <li><a href="../index.html#contact">Contact Us</a></li>
+            </ul>
+
+            <!-- Resources Links -->
+            <ul class="resources-links">
+                <li><a href="interview-questions.html">Interview Questions</a></li>
+                <li><a href="practice-coding.html">Practise Coding</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="resources.html">Other Resources</a></li>
+            </ul>
+
+            <!-- Social Media Links -->
+            <div class="social-links">
+                <a href="#" class="social-icon" aria-label="Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for toggling the menu visibility
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        // Toggle the nav-links visibility when the hamburger menu is clicked
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        window.addEventListener('click', (event) => {
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Dropdown Arrow Fix
+        function changeArrow(isHovering) {
+            var arrow = document.getElementById('arrow');
+            arrow.innerHTML = isHovering ? '&#x2191;' : '&#x2193;';
+        }
+
+        // Function to filter problems by category
+        function filterProblems(category) {
+            const rows = document.querySelectorAll(".problem-row");
+            const buttons = document.querySelectorAll(".filter-btn");
+
+            // Update Active Button
+            buttons.forEach(btn => {
+                btn.classList.toggle("active", btn.textContent.toLowerCase() === category.toLowerCase());
+            });
+
+            rows.forEach(row => {
+                if (category === "all" || row.getAttribute("data-category") === category.toLowerCase()) {
+                    row.style.display = "table-row";
+                } else {
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        // Set Default Active Filter when page loads
+        document.addEventListener("DOMContentLoaded", () => {
+            filterProblems("all");
+        });
+
+
+    </script>
+
+</body>
+</html>

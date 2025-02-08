@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quizzes | TechPrep</title>
+    <link rel="stylesheet" href="quizzes.css"> 
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar Section -->
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../index.html"><span>&lt</span>TechPrep <span>/&gt</span></a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../index.html">Home</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0);" class="dropbtn" onmouseover="changeArrow(true)" onmouseout="changeArrow(false)">Resources <span id="arrow">&#x2193;</span></a>
+                    <div class="dropdown-content">
+                        <a href="interview-questions.html">Interview Questions</a>
+                        <a href="practice-coding.html">Practice Coding</a>
+                        <a href="quizzes.html">Quizzes</a>
+                        <a href="resources.html">Other Resources</a>
+                    </div>
+                </li>
+                <li><a href="../about.html">About</a></li>
+                <li><a href="../contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Quizzes Section -->
+    <main>
+        <section class="quizzes">
+            <h2>Quizzes</h2>
+            <ul class="quiz-list">
+                <li>
+                    <h3>Quiz 1: Data Structures</h3>
+                    <p>Test your knowledge of arrays, stacks, and queues.</p>
+                    <a href="All quizzes/quiz1.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 2: Algorithms</h3>
+                    <p>Test your understanding of sorting, searching, and dynamic programming.</p>
+                    <a href="All quizzes/quiz2.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 3: System Design</h3>
+                    <p>Test your skills in designing scalable systems.</p>
+                    <a href="All quizzes/quiz3.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 4: Object-Oriented Programming (OOP)</h3>
+                    <p>Evaluate your understanding of OOP principles like inheritance, polymorphism, and encapsulation.</p>
+                    <a href="All quizzes/quiz4.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 5: Operating Systems</h3>
+                    <p>Test your knowledge of process management, memory management, and file systems.</p>
+                    <a href="All quizzes/quiz5.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 6: Computer Networks</h3>
+                    <p>Assess your understanding of network protocols, OSI model, and TCP/IP.</p>
+                    <a href="All quizzes/quiz6.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 7: Databases</h3>
+                    <p>Test your knowledge of SQL, NoSQL, indexing, and normalization.</p>
+                    <a href="All quizzes/quiz7.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 8: Web Development</h3>
+                    <p>Check your understanding of HTML, CSS, JavaScript, and frameworks.</p>
+                    <a href="All quizzes/quiz8.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 9: Cybersecurity</h3>
+                    <p>Evaluate your knowledge of encryption, authentication, and secure coding.</p>
+                    <a href="All quizzes/quiz9.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 10: Cloud Computing</h3>
+                    <p>Test your understanding of cloud services, virtualization, and deployment models.</p>
+                    <a href="All quizzes/quiz10.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 11: Machine Learning</h3>
+                    <p>Assess your knowledge of supervised learning, neural networks, and algorithms.</p>
+                    <a href="All quizzes/quiz11.html" class="quiz-btn">Take Quiz</a>
+                </li>
+                <li>
+                    <h3>Quiz 12: DevOps</h3>
+                    <p>Understand the principles of CI/CD, Docker, Kubernetes, and automation tools.</p>
+                    <a href="All quizzes/quiz12.html" class="quiz-btn">Take Quiz</a>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 TechPrep. All Rights Reserved.</p>
+            
+            <!-- Footer Links -->
+            <ul class="footer-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="../index.html#about">About Us</a></li>
+                <li><a href="../index.html#contact">Contact Us</a></li>
+            </ul>
+
+            <!-- Resources Links -->
+            <ul class="resources-links">
+                <li><a href="interview-questions.html">Interview Questions</a></li>
+                <li><a href="practice-coding.html">Practise Coding</a></li>
+                <li><a href="quizzes.html">Quizzes</a></li>
+                <li><a href="resources.html">Other Resources</a></li>
+            </ul>
+
+            <!-- Social Media Links -->
+            <div class="social-links">
+                <a href="#" class="social-icon" aria-label="Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="social-icon" aria-label="LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        function changeArrow(isHovered) {
+            document.getElementById("arrow").style.transform = isHovered ? "rotate(180deg)" : "rotate(0deg)";
+        }
+
+        window.addEventListener('click', (event) => {
+            if (!navLinks.contains(event.target) && !menuToggle.contains(event.target)) {
+                navLinks.classList.remove('active');
+            }
+        });
+    </script>
+
+</body>
+</html>
