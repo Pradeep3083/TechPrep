@@ -473,3 +473,62 @@ footer {
         font-size: 1rem;
     }
 }
+
+@media (max-width: 400px) {
+
+    /* Hero Section */
+    .hero {
+        padding-top: 100px;
+    }
+    .hero h1 {
+        font-size: 2rem;
+    }
+    .hero p {
+        font-size: 1rem;
+    }
+    .cta-btn {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+
+    /* Resources Section */
+    .resource-cards {
+        grid-template-columns: 1fr; /* Single column layout */
+    }
+    .resource-cards .card {
+        padding: 1.5rem;
+    }
+    .resource-cards .card h3 {
+        font-size: 1.5rem;
+    }
+    .resource-cards .card a {
+        font-size: 1rem;
+        padding: 0.5rem;
+    }
+
+    /* About Us */
+    .about {
+        padding: 2rem 1rem;
+    }
+    .about h2 {
+        font-size: 2rem;
+    }
+    .about p {
+        font-size: 1rem;
+    }
+
+    /* Contact Form */
+    .contact form {
+        width: 90%;
+    }
+    .contact form input,
+    .contact form textarea {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+    .contact form button {
+        padding: 0.8rem 1.5rem;
+        font-size: 1rem;
+    }
+}
+
